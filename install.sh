@@ -48,8 +48,7 @@ open "$DEST"
 cat <<MSG
 
   Athan App Mac is installed and running — look at your notch.
-  • Allow Location (or set a city in Settings) so it can work out your prayer times.
-  • Allow Calendar if you want it to stay quiet during meetings.
+  • A short setup window walks you through location and calendar access the first time.
   • The moon icon in the menu bar has Settings, Pause and Quit.
 
   Update later by running the same command again.
