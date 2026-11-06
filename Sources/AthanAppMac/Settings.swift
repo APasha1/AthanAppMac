@@ -18,6 +18,10 @@ final class AppSettings: ObservableObject {
     @Published var preReminderMinutes: Int { didSet { save(preReminderMinutes, "preReminderMinutes") } }
     /// Minutes before a prayer's time runs out to remind you if it isn't checked off (0 = off).
     @Published var endReminderMinutes: Int { didSet { save(endReminderMinutes, "endReminderMinutes") } }
+    /// Master switch: false = the island stays silent.
+    @Published var playSounds: Bool { didSet { save(playSounds, "playSounds") } }
+    /// Also play sounds while the screen is off or locked.
+    @Published var soundWhenAway: Bool { didSet { save(soundWhenAway, "soundWhenAway") } }
     @Published var playAthan: Bool { didSet { save(playAthan, "playAthan") } }
     /// Path to a user-chosen athan audio file. Empty means use the built-in chime.
     @Published var athanPath: String { didSet { save(athanPath, "athanPath") } }
@@ -77,6 +81,10 @@ final class AppSettings: ObservableObject {
         preReminderMinutes = d.object(forKey: "preReminderMinutes") as? Int ?? 10
         endReminderMinutes = d.object(forKey: "endReminderMinutes") as? Int ?? 15
         playAthan = d.object(forKey: "playAthan") as? Bool ?? true
+        playSounds = d.object(forKey: "playSounds") as? Bool ?? true
+        // Existing installs keep the old behaviour (sound even with the screen off); new ones stay quiet then.
+        let setUpBefore = d.double(forKey: "latitude") != 0 || d.double(forKey: "longitude") != 0
+        soundWhenAway = d.object(forKey: "soundWhenAway") as? Bool ?? setUpBefore
         athanPath = d.string(forKey: "athanPath") ?? ""
         fajrAthanPath = d.string(forKey: "fajrAthanPath") ?? ""
         athanVolume = d.object(forKey: "athanVolume") as? Double ?? 0.7

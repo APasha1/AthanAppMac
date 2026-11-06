@@ -47,6 +47,8 @@ A short setup walks you through everything. Afterwards, Settings has it all.
 | **Welcome**: what the app does | **Location**: use your current location or type any city. It shows your time zone, and times follow daylight saving automatically. |
 | <img src="docs/images/onboarding-3-calculation.png" alt="Calculation" width="400" /> | <img src="docs/images/onboarding-4-meetings.png" alt="Meetings" width="400" /> |
 | **Calculation**: method and Asr school, with a live preview of today's times | **Meetings**: hide during calls, and optional calendar access |
+| <img src="docs/images/onboarding-5-sound.png" alt="Sound" width="400" /> | <img src="docs/images/onboarding-6-done.png" alt="Done" width="400" /> |
+| **Sound**: athan, soft chime or silent, and whether to play while the screen is off or locked | **Done**: tips, and open at login |
 
 Times always follow your Mac's time zone, so they're right wherever you are, and the clock changes in spring and autumn need no setting.
 
@@ -110,6 +112,7 @@ Times always follow your Mac's time zone, so they're right wherever you are, and
 - **Fine-tune any prayer by ±30 minutes** to match your mosque or another athan app.
 - Handles daylight-saving changes and high latitudes.
 - Choose your own athan audio, with a separate one for Fajr if you like, and set the volume.
+- **Sound your way**: athan, soft chime or fully silent. By default it stays quiet while your screen is off or locked, so it never goes off in an empty room; you can turn that on.
 
 ### Native and lightweight
 

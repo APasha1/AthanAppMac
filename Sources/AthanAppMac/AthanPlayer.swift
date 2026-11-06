@@ -5,8 +5,26 @@ import AVFoundation
 @MainActor
 final class AthanPlayer: ObservableObject {
     @Published private(set) var isPlaying = false
+    /// The display is asleep, the screen is locked, or the Mac is going to sleep.
+    private(set) var screenAway = false
     private var player: AVAudioPlayer?
     private var watcher: Timer?
+
+    init() {
+        let ws = NSWorkspace.shared.notificationCenter
+        for (name, away) in [(NSWorkspace.screensDidSleepNotification, true), (NSWorkspace.willSleepNotification, true),
+                             (NSWorkspace.screensDidWakeNotification, false), (NSWorkspace.didWakeNotification, false)] {
+            ws.addObserver(forName: name, object: nil, queue: .main) { [weak self] _ in
+                Task { @MainActor in self?.screenAway = away }
+            }
+        }
+        let dist = DistributedNotificationCenter.default()
+        for (name, away) in [("com.apple.screenIsLocked", true), ("com.apple.screenIsUnlocked", false)] {
+            dist.addObserver(forName: Notification.Name(name), object: nil, queue: .main) { [weak self] _ in
+                Task { @MainActor in self?.screenAway = away }
+            }
+        }
+    }
 
     func play(path: String, volume: Double) {
         stop(fade: false)

@@ -3,7 +3,7 @@ import SwiftUI
 
 /// First-run setup: permissions, location, calculation, calendar. Settings covers everything afterwards.
 struct OnboardingView: View {
-    enum Step: Int, CaseIterable { case welcome, location, calculation, meetings, done }
+    enum Step: Int, CaseIterable { case welcome, location, calculation, meetings, sound, done }
 
     @EnvironmentObject var settings: AppSettings
     @EnvironmentObject var store: PrayerStore
@@ -23,6 +23,7 @@ struct OnboardingView: View {
                 case .location: locationStep
                 case .calculation: calculation
                 case .meetings: meetings
+                case .sound: sound
                 case .done: done
                 }
             }
@@ -167,6 +168,46 @@ struct OnboardingView: View {
                         }
                         .buttonStyle(.borderedProminent)
                     }
+                }
+            }
+        }
+    }
+
+    private var sound: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            header("speaker.wave.2.fill", "Sound", "Hear the athan when it's time to pray, or keep it silent and just see the island drop down.")
+
+            card {
+                Toggle("Play sounds", isOn: $settings.playSounds).font(.headline)
+                if settings.playSounds {
+                    Picker("At prayer time", selection: $settings.playAthan) {
+                        Text("Athan").tag(true)
+                        Text("Soft chime").tag(false)
+                    }
+                    .pickerStyle(.segmented)
+                    if settings.playAthan {
+                        AudioPickerRow(title: "Athan audio", path: $settings.athanPath)
+                        Text("Choose an athan recording (MP3 or M4A). Until you do, a soft chime plays.")
+                            .font(.caption).foregroundStyle(.secondary)
+                    }
+                    HStack {
+                        Image(systemName: "speaker.fill").foregroundStyle(.secondary)
+                        Slider(value: $settings.athanVolume, in: 0...1)
+                        Image(systemName: "speaker.wave.3.fill").foregroundStyle(.secondary)
+                        Button(store.player.isPlaying ? "Stop" : "Preview") {
+                            if store.player.isPlaying { store.stopAthan() }
+                            else if settings.playAthan { store.player.play(path: settings.athanPath, volume: settings.athanVolume) }
+                            else { store.player.chime(volume: settings.athanVolume * 0.6) }
+                        }
+                    }
+                }
+            }
+
+            if settings.playSounds {
+                card {
+                    Toggle("Also play when my screen is off or locked", isOn: $settings.soundWhenAway).font(.headline)
+                    Text("When this is off, the app stays silent while your Mac's display is asleep or locked, so it won't go off in a quiet room or a meeting you've stepped into.")
+                        .font(.caption).foregroundStyle(.secondary)
                 }
             }
         }

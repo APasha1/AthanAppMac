@@ -99,7 +99,11 @@ struct SettingsView: View {
                     Text("Last hour before Maghrib").tag(60)
                     Text("Last 90 min before Maghrib").tag(90)
                 }
+                Toggle("Play sounds", isOn: $settings.playSounds)
+                Toggle("Also play when the screen is off or locked", isOn: $settings.soundWhenAway)
+                    .disabled(!settings.playSounds)
                 Toggle("Play athan at prayer time", isOn: $settings.playAthan)
+                    .disabled(!settings.playSounds)
                 AudioPickerRow(title: "Athan sound", path: $settings.athanPath)
                 AudioPickerRow(title: "Fajr athan (optional)", path: $settings.fajrAthanPath)
                 HStack {

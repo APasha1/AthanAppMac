@@ -335,10 +335,16 @@ final class PrayerStore: ObservableObject {
         showAlert(cur.prayer, deferred: true)
     }
 
+    private var soundAllowed: Bool {
+        settings.playSounds && (settings.soundWhenAway || !player.screenAway)
+    }
+
     private func showAlert(_ p: Prayer, deferred isDeferred: Bool) {
         peekTask?.cancel()
         set(.alert(p, deferred: isDeferred))
-        if settings.playAthan && !isDeferred {
+        if !soundAllowed {
+            // Silent: the island still drops down.
+        } else if settings.playAthan && !isDeferred {
             let path = p == .fajr && !settings.fajrAthanPath.isEmpty ? settings.fajrAthanPath : settings.athanPath
             player.play(path: path, volume: settings.athanVolume)
         } else {
@@ -361,7 +367,7 @@ final class PrayerStore: ObservableObject {
     private func showPeek(_ peek: Peek) {
         peekTask?.cancel()
         set(.peek(peek))
-        player.chime(volume: settings.athanVolume * 0.35)
+        if soundAllowed { player.chime(volume: settings.athanVolume * 0.35) }
         peekTask = Task { [weak self] in
             guard let self else { return }
             try? await Task.sleep(for: .seconds(max(4, self.settings.glanceSeconds)))
