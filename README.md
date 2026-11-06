@@ -37,6 +37,19 @@ cd AthanAppMac
 open "/Applications/Athan App Mac.app"
 ```
 
+## First launch
+
+A short setup walks you through everything. Afterwards, Settings has it all.
+
+| | |
+|---|---|
+| <img src="docs/images/onboarding-1-welcome.png" alt="Welcome" width="400" /> | <img src="docs/images/onboarding-2-location.png" alt="Location" width="400" /> |
+| **Welcome**: what the app does | **Location**: use your current location or type any city. It shows your time zone, and times follow daylight saving automatically. |
+| <img src="docs/images/onboarding-3-calculation.png" alt="Calculation" width="400" /> | <img src="docs/images/onboarding-4-meetings.png" alt="Meetings" width="400" /> |
+| **Calculation**: method and Asr school, with a live preview of today's times | **Meetings**: hide during calls, and optional calendar access |
+
+Times always follow your Mac's time zone, so they're right wherever you are, and the clock changes in spring and autumn need no setting.
+
 ## Features
 
 ### Lives in the notch

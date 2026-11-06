@@ -43,6 +43,9 @@ final class AppSettings: ObservableObject {
     /// Seconds the prayer-time glance stays down before tucking back into the notch.
     @Published var glanceSeconds: Int { didSet { save(glanceSeconds, "glanceSeconds") } }
 
+    /// First-run setup has been completed.
+    @Published var onboarded: Bool { didSet { save(onboarded, "onboarded") } }
+
     @Published var launchAtLogin: Bool {
         didSet {
             save(launchAtLogin, "openAtLogin")
@@ -89,6 +92,8 @@ final class AppSettings: ObservableObject {
         glanceSeconds = d.object(forKey: "glanceSeconds") as? Int ?? 10
         showWings = d.object(forKey: "showWings") as? Bool ?? true
         launchAtLogin = d.object(forKey: "openAtLogin") as? Bool ?? true
+        // People who set up the app before onboarding existed already have a location.
+        onboarded = d.object(forKey: "onboarded") as? Bool ?? (d.double(forKey: "latitude") != 0 || d.double(forKey: "longitude") != 0)
     }
 
     private func save(_ value: Any, _ key: String) { defaults.set(value, forKey: key) }

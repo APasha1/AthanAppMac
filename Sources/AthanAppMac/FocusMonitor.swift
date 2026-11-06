@@ -50,7 +50,8 @@ final class FocusMonitor: ObservableObject {
     }
 
     func start() {
-        requestCalendar()
+        // On first run, onboarding asks for calendar access at the right moment instead.
+        if settings.onboarded { requestCalendar() }
         poll()
         timer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { [weak self] _ in
             Task { @MainActor in self?.poll() }

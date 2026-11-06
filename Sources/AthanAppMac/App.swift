@@ -11,6 +11,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var notch: NotchWindowController?
     private var statusItem: NSStatusItem?
     private var settingsWindow: NSWindow?
+    private var onboardingWindow: NSWindow?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
@@ -18,6 +19,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let args = CommandLine.arguments
         if let i = args.firstIndex(of: "--snapshot"), i + 1 < args.count {
             Snapshot.run(to: args[i + 1], store: store, settings: settings)
+            NSApp.terminate(nil)
+            return
+        }
+        if let i = args.firstIndex(of: "--snapshot-onboarding"), i + 1 < args.count {
+            snapshotOnboarding(to: args[i + 1])
             NSApp.terminate(nil)
             return
         }
@@ -42,7 +48,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             self.settings.longitude = coord.longitude
             self.settings.placeName = name
         }
-        if settings.useAutoLocation { location.start() }
+        if settings.useAutoLocation && settings.onboarded { location.start() }
 
         // Start automatically after a restart (unless turned off in Settings).
         settings.applyLoginItem()
@@ -54,12 +60,65 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         notch?.show()
         setupStatusItem()
 
-        // First run with no location yet: open Settings so it can be set.
-        if !settings.hasLocation {
+        // First run (or --onboarding): walk through permissions and location.
+        if !settings.onboarded || args.contains("--onboarding") {
+            openOnboarding()
+        } else if !settings.hasLocation {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) { [weak self] in
                 guard let self, !self.settings.hasLocation else { return }
                 self.openSettings()
             }
+        }
+    }
+
+    // MARK: - Onboarding
+
+    private func onboardingView(step: OnboardingView.Step = .welcome) -> some View {
+        OnboardingView(step: step) { [weak self] in
+            guard let self else { return }
+            self.settings.onboarded = true
+            self.focus.requestCalendar()
+            self.onboardingWindow?.close()
+            self.onboardingWindow = nil
+            self.store.testPeek()
+        }
+        .environmentObject(settings)
+        .environmentObject(store)
+        .environmentObject(location)
+        .environmentObject(focus)
+    }
+
+    private func openOnboarding() {
+        let window = NSWindow(contentViewController: NSHostingController(rootView: onboardingView()))
+        window.title = "Welcome to Athan App Mac"
+        window.styleMask = [.titled, .closable, .fullSizeContentView]
+        window.titlebarAppearsTransparent = true
+        window.titleVisibility = .hidden
+        window.isReleasedWhenClosed = false
+        window.center()
+        onboardingWindow = window
+        NSApp.activate()
+        window.makeKeyAndOrderFront(nil)
+    }
+
+    /// `--snapshot-onboarding <dir>`: renders each onboarding step to a PNG (for the README).
+    func snapshotOnboarding(to dir: String) {
+        if !settings.hasLocation {
+            settings.latitude = 40.7128; settings.longitude = -74.0060; settings.placeName = "New York, NY"
+        }
+        store.start()
+        for step in OnboardingView.Step.allCases {
+            let host = NSHostingView(rootView: onboardingView(step: step))
+            let window = NSWindow(contentRect: NSRect(x: -3000, y: 0, width: 520, height: 580),
+                                  styleMask: [.borderless], backing: .buffered, defer: false)
+            window.contentView = host
+            window.orderFrontRegardless()
+            RunLoop.main.run(until: Date().addingTimeInterval(0.6))
+            guard let rep = host.bitmapImageRepForCachingDisplay(in: host.bounds) else { continue }
+            host.cacheDisplay(in: host.bounds, to: rep)
+            let png = rep.representation(using: .png, properties: [:])
+            try? png?.write(to: URL(fileURLWithPath: dir).appendingPathComponent("onboarding-\(step.rawValue + 1)-\(step).png"))
+            window.orderOut(nil)
         }
     }
 

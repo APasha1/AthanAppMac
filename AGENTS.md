@@ -9,7 +9,7 @@ Athan App Mac is a macOS menu-bar app (Swift Package, no Xcode project). If a us
    ```
    This clones to `~/.athan-app-mac`, runs `build.sh` (a release build, a codesigned `.app`, copied to `/Applications`, or `~/Applications` if that isn't writable) and opens the app.
 3. Verify it's running: `pgrep -x AthanAppMac`.
-4. Tell the user to look at their notch and to allow **Location** (or set a city in Settings), plus **Calendars** if they want it quiet in meetings. These permission prompts need the user to click. You can't approve them.
+4. On first launch a setup window opens (location, calculation method, calendar). Tell the user to go through it. The Location and Calendar permission prompts need the user to click; you can't approve them.
 
 ## Configuring it from the terminal (optional)
 
@@ -29,5 +29,6 @@ Settings live in the `com.abdullahpasha.prayerisland` defaults domain. Quit the 
 ## Developing
 
 - `./build.sh` builds and installs. `swift build` is enough just to compile.
-- `.build/release/AthanAppMac --snapshot <dir>` renders every island state to PNGs (it's how the README screenshots are made).
+- `.build/release/AthanAppMac --snapshot <dir>` renders every island state to PNGs, and `--snapshot-onboarding <dir>` renders the setup steps. That's how the README screenshots are made.
+- `--onboarding` opens the setup window again, even after it's been completed.
 - `ATHAN_APP_MAC_CAPTURABLE=1` makes the island visible to screen capture while debugging.
