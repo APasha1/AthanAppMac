@@ -2,10 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>CFBundleName</key><string>Prayer Island</string>
-    <key>CFBundleDisplayName</key><string>Prayer Island</string>
+    <key>CFBundleName</key><string>Athan App Mac</string>
+    <key>CFBundleDisplayName</key><string>Athan App Mac</string>
     <key>CFBundleIdentifier</key><string>com.abdullahpasha.prayerisland</string>
-    <key>CFBundleExecutable</key><string>PrayerIsland</string>
+    <key>CFBundleExecutable</key><string>AthanAppMac</string>
     <key>CFBundlePackageType</key><string>APPL</string>
     <key>CFBundleShortVersionString</key><string>1.0</string>
     <key>CFBundleVersion</key><string>1</string>
@@ -13,8 +13,8 @@
     <key>LSMinimumSystemVersion</key><string>14.0</string>
     <key>LSUIElement</key><true/>
     <key>NSHighResolutionCapable</key><true/>
-    <key>NSCalendarsFullAccessUsageDescription</key><string>Prayer Island checks your calendar so it stays quiet during meetings and reminds you afterwards.</string>
-    <key>NSCalendarsUsageDescription</key><string>Prayer Island checks your calendar so it stays quiet during meetings and reminds you afterwards.</string>
+    <key>NSCalendarsFullAccessUsageDescription</key><string>Athan App Mac checks your calendar so it stays quiet during meetings and reminds you afterwards.</string>
+    <key>NSCalendarsUsageDescription</key><string>Athan App Mac checks your calendar so it stays quiet during meetings and reminds you afterwards.</string>
     <key>NSLocationUsageDescription</key><string>Your location is used to calculate accurate prayer times. It never leaves your Mac.</string>
     <key>NSLocationWhenInUseUsageDescription</key><string>Your location is used to calculate accurate prayer times. It never leaves your Mac.</string>
 </dict>

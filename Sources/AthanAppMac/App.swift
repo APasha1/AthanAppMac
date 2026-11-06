@@ -67,7 +67,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     private func setupStatusItem() {
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
-        item.button?.image = NSImage(systemSymbolName: "moon.stars.fill", accessibilityDescription: "Prayer Island")
+        item.button?.image = NSImage(systemSymbolName: "moon.stars.fill", accessibilityDescription: "Athan App Mac")
         let menu = NSMenu()
         menu.delegate = self
         item.menu = menu
@@ -104,7 +104,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         menu.addItem(capture)
         menu.addItem(.separator())
         menu.addItem(action("Settings…", key: ",") { $0.openSettings() })
-        menu.addItem(action("Quit Prayer Island", key: "q") { _ in NSApp.terminate(nil) })
+        menu.addItem(action("Quit Athan App Mac", key: "q") { _ in NSApp.terminate(nil) })
     }
 
     private func action(_ title: String, key: String = "", _ handler: @escaping (AppDelegate) -> Void) -> NSMenuItem {
@@ -122,7 +122,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                 .environmentObject(location)
                 .environmentObject(focus)
             let window = NSWindow(contentViewController: NSHostingController(rootView: view))
-            window.title = "Prayer Island"
+            window.title = "Athan App Mac"
             window.styleMask = [.titled, .closable, .fullSizeContentView]
             window.titlebarAppearsTransparent = true
             window.isReleasedWhenClosed = false
@@ -150,7 +150,7 @@ final class ClosureMenuItem: NSMenuItem {
 }
 
 @main
-enum PrayerIslandApp {
+enum AthanAppMacApp {
     static func main() {
         let app = NSApplication.shared
         let delegate = MainActor.assumeIsolated { AppDelegate() }

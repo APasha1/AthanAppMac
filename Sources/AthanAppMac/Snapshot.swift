@@ -1,7 +1,7 @@
 import AppKit
 import SwiftUI
 
-/// `PrayerIsland --snapshot <dir>` renders each island state to a PNG (used for design review).
+/// `AthanAppMac --snapshot <dir>` renders each island state to a PNG (used for design review).
 @MainActor
 enum Snapshot {
     static func run(to dir: String, store: PrayerStore, settings: AppSettings) {

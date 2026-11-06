@@ -1,12 +1,12 @@
 <div align="center">
 
-# 🌙 Prayer Island
+# 🌙 Athan App Mac
 
 **Prayer times that live in your MacBook's notch.**
 
 A Dynamic Island-style app for macOS: it shows the next prayer around the camera notch and drops down briefly when it's time to pray. It stays out of the way during calls, and nothing it shows appears in screenshots or screen shares.
 
-![Prayer Island expanded](docs/images/expanded.png)
+![Athan App Mac expanded](docs/images/expanded.png)
 
 </div>
 
@@ -15,26 +15,26 @@ A Dynamic Island-style app for macOS: it shows the next prayer around the camera
 You need a Mac on **macOS 14 Sonoma or later**. A MacBook with a notch looks best; on other screens the island floats under the menu bar instead. Paste this into Terminal:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/APasha1/PrayerIsland/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/APasha1/AthanAppMac/main/install.sh | bash
 ```
 
-The installer downloads the source, builds it on your Mac with Apple's Swift toolchain, puts **Prayer Island** in `/Applications` and opens it. If you don't have Apple's Command Line Tools, it starts their install first. Run the same command again to update.
+The installer downloads the source, builds it on your Mac with Apple's Swift toolchain, puts **Athan App Mac** in `/Applications` and opens it. If you don't have Apple's Command Line Tools, it starts their install first. Run the same command again to update.
 
 ### Install with an AI agent
 
 If you use Claude Code, Codex, Cursor or another coding agent, just ask:
 
-> Install Prayer Island from https://github.com/APasha1/PrayerIsland
+> Install Athan App Mac from https://github.com/APasha1/AthanAppMac
 
 [AGENTS.md](AGENTS.md) has the steps an agent follows to install, check and configure the app.
 
 ### Build it yourself
 
 ```bash
-git clone https://github.com/APasha1/PrayerIsland.git
-cd PrayerIsland
+git clone https://github.com/APasha1/AthanAppMac.git
+cd AthanAppMac
 ./build.sh
-open "/Applications/Prayer Island.app"
+open "/Applications/Athan App Mac.app"
 ```
 
 ## Features
@@ -127,7 +127,7 @@ Open them from the moon icon in the menu bar, or the gear in the expanded island
 ## Uninstall
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/APasha1/PrayerIsland/main/install.sh | bash -s -- --uninstall
+curl -fsSL https://raw.githubusercontent.com/APasha1/AthanAppMac/main/install.sh | bash -s -- --uninstall
 ```
 
 ## How it works
@@ -140,7 +140,7 @@ curl -fsSL https://raw.githubusercontent.com/APasha1/PrayerIsland/main/install.s
 | `NotchWindow.swift` | The borderless, click-through panel over the notch, excluded from capture |
 | `IslandView.swift` | The SwiftUI island: compact, glance, expanded and alert |
 
-To regenerate the screenshots in this README, run `.build/release/PrayerIsland --snapshot <dir>`. It renders every island state to PNGs.
+To regenerate the screenshots in this README, run `.build/release/AthanAppMac --snapshot <dir>`. It renders every island state to PNGs.
 
 ## License
 

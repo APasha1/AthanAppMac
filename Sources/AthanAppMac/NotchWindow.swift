@@ -76,9 +76,9 @@ final class NotchPanel: NSPanel {
     }
 
     /// Leave the island out of screenshots, recordings and screen shares, or let them see it.
-    /// (PRAYER_ISLAND_CAPTURABLE=1 forces it visible, for taking screenshots of the app itself.)
+    /// (ATHAN_APP_MAC_CAPTURABLE=1 forces it visible, for taking screenshots of the app itself.)
     func setHiddenFromCapture(_ hidden: Bool) {
-        let forced = ProcessInfo.processInfo.environment["PRAYER_ISLAND_CAPTURABLE"] == "1"
+        let forced = ProcessInfo.processInfo.environment["ATHAN_APP_MAC_CAPTURABLE"] == "1"
         sharingType = hidden && !forced ? .none : .readOnly
     }
 

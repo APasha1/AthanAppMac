@@ -2,9 +2,9 @@
 import PackageDescription
 
 let package = Package(
-    name: "PrayerIsland",
+    name: "AthanAppMac",
     platforms: [.macOS(.v14)],
     targets: [
-        .executableTarget(name: "PrayerIsland", path: "Sources/PrayerIsland")
+        .executableTarget(name: "AthanAppMac", path: "Sources/AthanAppMac")
     ]
 )

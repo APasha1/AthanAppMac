@@ -49,7 +49,7 @@ final class AppSettings: ObservableObject {
             do {
                 if launchAtLogin { try SMAppService.mainApp.register() } else { try SMAppService.mainApp.unregister() }
             } catch {
-                NSLog("PrayerIsland: launch-at-login change failed: \(error)")
+                NSLog("AthanAppMac: launch-at-login change failed: \(error)")
             }
         }
     }
